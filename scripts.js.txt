@@ -1,0 +1,59 @@
+// scripts.js
+
+// Cấu hình Firebase
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+
+function uploadFile() {
+    const fileInput = document.getElementById('file-input');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Please select a file.");
+        return;
+    }
+
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(file.name);
+
+    fileRef.put(file).then(() => {
+        fileRef.getDownloadURL().then((url) => {
+            displayFile(url, file);
+        });
+    }).catch((error) => {
+        console.error("Error uploading file:", error);
+    });
+}
+
+function displayFile(url, file) {
+    const gallery = document.getElementById('gallery');
+    let element;
+
+    if (file.type.startsWith('image/')) {
+        element = document.createElement('img');
+        element.alt = file.name;
+    } else if (file.type.startsWith('video/')) {
+        element = document.createElement('video');
+        element.controls = true;
+    } else {
+        alert("Unsupported file type.");
+        return;
+    }
+
+    element.src = url;
+    element.style.opacity = 0;
+    gallery.appendChild(element);
+
+    setTimeout(() => {
+        element.style.opacity = 1;
+        element.style.transition = "opacity 0.5s";
+    }, 10);
+}

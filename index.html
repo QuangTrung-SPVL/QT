@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Friends Gallery</h1>
+    </header>
+    <main>
+        <div id="upload-section">
+            <input type="file" id="file-input" accept="image/*,video/*">
+            <button onclick="uploadFile()">Upload</button>
+        </div>
+        <div id="gallery"></div>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>
